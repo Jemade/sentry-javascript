@@ -67,6 +67,18 @@ describe('Nuxt Client SDK', () => {
       expect(callArgs?.defaultIntegrations).toBe(customIntegrations);
     });
 
+    it('preserves an explicitly empty default integration list', () => {
+      const customIntegrations: [] = [];
+
+      init({
+        dsn: 'https://public@dsn.ingest.sentry.io/1337',
+        defaultIntegrations: customIntegrations,
+      });
+
+      expect(browserInit).toHaveBeenCalledTimes(1);
+      expect(browserInit.mock.calls[0]?.[0]?.defaultIntegrations).toBe(customIntegrations);
+    });
+
     it('allows options.defaultIntegrations to be set to false', () => {
       init({
         dsn: 'https://public@dsn.ingest.sentry.io/1337',
